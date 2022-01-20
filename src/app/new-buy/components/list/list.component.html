@@ -1,0 +1,11 @@
+<ion-list class="list">
+  <ion-item *ngFor="let obj of listProdutos; let i = index">
+    <ion-label>{{ obj?.produto }}</ion-label>
+    <ion-button color="danger" (click)="delete(i)">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="warning" (click)="edit(i)">
+      <ion-icon name="pencil"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>
