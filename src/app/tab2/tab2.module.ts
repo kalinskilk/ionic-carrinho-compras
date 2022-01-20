@@ -6,9 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { ListOptionsBuysComponent } from './components/list-options-buys/list-options-buys.component';
 
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, Tab2PageRoutingModule],
-  declarations: [Tab2Page],
+  declarations: [Tab2Page, ListOptionsBuysComponent],
 })
 export class Tab2PageModule {}
