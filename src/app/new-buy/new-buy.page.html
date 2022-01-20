@@ -5,15 +5,31 @@
 </ion-header>
 
 <ion-content>
-  <ion-item class="pd-3">
-    <ion-label position="stacked">Produto</ion-label>
-    <ion-input></ion-input>
+  <form [formGroup]="formGroup" (ngSubmit)="addProduto()">
+    <ion-item class="pd-3">
+      <ion-label position="stacked">Produto</ion-label>
+      <ion-input formControlName="produto"></ion-input>
+    </ion-item>
+    <ion-item class="pd-3">
+      <ion-label position="stacked">Valor</ion-label>
+      <ion-input type="number" formControlName="valor"></ion-input>
+    </ion-item>
+    <ion-button color="success" type="submit" fill="outline">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </form>
+  <ion-item class="item-qtde">
+    <ion-label>Quantidade de produtos:</ion-label>
+    <ion-badge slot="end">{{listProdutos.length}}</ion-badge>
   </ion-item>
-  <ion-item class="pd-3">
-    <ion-label position="stacked">Valor</ion-label>
-    <ion-input type="number"></ion-input>
-  </ion-item>
-  <ion-button color="success">
-    <ion-icon name="add-outline"></ion-icon>
+
+  <app-list
+    [listProdutos]="listProdutos"
+    (outEdit)="onEdit($event)"
+    (outDel)="onDelete($event)"
+  ></app-list>
+
+  <ion-button color="primary" expand="block" fill="outline">
+    Salvar Compra
   </ion-button>
 </ion-content>
