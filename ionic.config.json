@@ -1,5 +1,7 @@
 {
   "name": "ioni-carrinho-compras",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

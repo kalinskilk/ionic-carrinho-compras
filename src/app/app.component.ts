@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { SqlLiteService } from './services/sql/sql-lite.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private sqliteService: SqlLiteService, platform: Platform) {
+    platform.ready().then(() => {
+      this.sqliteService.createDB();
+    });
+  }
 }

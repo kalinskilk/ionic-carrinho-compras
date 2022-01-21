@@ -5,14 +5,14 @@ export const listOptions = [
     imgUrl:
       // eslint-disable-next-line max-len
       'https://img.freepik.com/vetores-gratis/os-vegetais-que-compram-o-conceito-realistico-com-carrinho-de-compras-e-bens-vector-a-ilustracao_1284-16246.jpg?size=338&ext=jpg',
-    path: '/list-buys',
+    path: 'tabs/list-buys',
   },
   {
-    title: 'Nova Compra',
-    description: 'Faça uma nova compra',
+    title: 'Nova Lista Compra',
+    description: 'Faça uma nova lista',
     imgUrl:
       // eslint-disable-next-line max-len
       'https://img.freepik.com/vetores-gratis/os-vegetais-que-compram-o-conceito-realistico-com-carrinho-de-compras-e-bens-vector-a-ilustracao_1284-16246.jpg?size=338&ext=jpg',
-    path: 'new-buy',
+    path: 'tabs/new-buy',
   },
 ];

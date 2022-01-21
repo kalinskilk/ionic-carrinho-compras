@@ -4,6 +4,6 @@ export class NewBuyModel {
 
   constructor() {
     this.produto = '';
-    this.valor = 0;
+    this.valor = null;
   }
 }

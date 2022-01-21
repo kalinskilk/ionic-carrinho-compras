@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
+import { SqlLiteService } from '../services/sql/sql-lite.service';
 import { NewBuyModel } from './new-buy-model';
+import { NewBuyService } from './new-buy.service';
 
 @Component({
   selector: 'app-new-buy',
@@ -13,7 +16,12 @@ export class NewBuyPage implements OnInit {
   public model: NewBuyModel;
   public listProdutos: NewBuyModel[] = [];
   public indexEditing: number;
-  constructor(private fb: FormBuilder, public alertService: AlertService) {
+  constructor(
+    private fb: FormBuilder,
+    public alertService: AlertService,
+    private http: NewBuyService,
+    private router: Router
+  ) {
     this.model = new NewBuyModel();
     this.formGroup = this.fb.group(this.model);
   }
@@ -57,5 +65,15 @@ export class NewBuyPage implements OnInit {
 
   validators(): void {
     this.formGroup.controls.produto.setValidators(Validators.required);
+  }
+
+  async onSalvar(): Promise<void> {
+    if (!this.listProdutos.length) {
+      const msg = `Nenhum produto informado a lista não pode ser salva!`;
+      this.alertService.presentToast(msg, 1500, 'danger');
+      return;
+    }
+    await this.http.saveCompra(this.listProdutos);
+    this.router.navigate(['/tab2']);
   }
 }

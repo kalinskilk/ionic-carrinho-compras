@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Nova Compra</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
+      <ion-title>Nova Compra</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,11 +17,13 @@
       <ion-label position="stacked">Valor</ion-label>
       <ion-input type="number" formControlName="valor"></ion-input>
     </ion-item>
-    <ion-button color="success" type="submit" fill="outline">
-      <ion-icon name="add-outline"></ion-icon>
-    </ion-button>
+    <div class="pd-3">
+      <ion-button color="success" type="submit" fill="outline">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </div>
   </form>
-  <ion-item class="item-qtde">
+  <ion-item class="item-qtde pd-3">
     <ion-label>Quantidade de produtos:</ion-label>
     <ion-badge slot="end">{{listProdutos.length}}</ion-badge>
   </ion-item>
@@ -29,7 +34,14 @@
     (outDel)="onDelete($event)"
   ></app-list>
 
-  <ion-button color="primary" expand="block" fill="outline">
-    Salvar Compra
-  </ion-button>
+  <div class="pd-3">
+    <ion-button
+      color="primary"
+      expand="block"
+      fill="outline"
+      (click)="onSalvar()"
+    >
+      Salvar Lista
+    </ion-button>
+  </div>
 </ion-content>
