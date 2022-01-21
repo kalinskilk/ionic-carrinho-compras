@@ -1,0 +1,20 @@
+<ion-card>
+  <ion-card-content>
+    <ion-list>
+      <ion-item
+        button
+        *ngFor="let obj of list"
+        [routerLink]="['/details', obj.path]"
+      >
+        <ion-avatar slot="start">
+          <img [src]="obj.imgUrl" />
+        </ion-avatar>
+
+        <ion-label>
+          {{ obj.title }}
+          <p>{{ obj.description }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
