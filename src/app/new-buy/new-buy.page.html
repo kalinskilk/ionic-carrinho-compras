@@ -8,6 +8,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-item class="pd-3">
+    <ion-label position="stacked">Descrição</ion-label>
+    <ion-input
+      placeholder="Ex: Compra semanal"
+      [(ngModel)]="descriptionBuy"
+    ></ion-input>
+  </ion-item>
+
   <form [formGroup]="formGroup" (ngSubmit)="addProduto()">
     <ion-item class="pd-3">
       <ion-label position="stacked">Produto</ion-label>

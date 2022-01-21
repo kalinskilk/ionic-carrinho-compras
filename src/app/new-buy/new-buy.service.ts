@@ -2,17 +2,23 @@ import { Injectable } from '@angular/core';
 
 import { SqlLiteService } from '../services/sql/sql-lite.service';
 import { NewBuyModel } from './new-buy-model';
-import { INSERT_COMPRA, QUERY_ALL_COMPRAS } from './sql';
+import { INSERT_COMPRA, INSERT_ITENS_COMPRA, QUERY_ALL_COMPRAS } from './sql';
 
 @Injectable({ providedIn: 'root' })
 export class NewBuyService {
   constructor(private sql: SqlLiteService) {}
 
-  async saveCompra(itens: NewBuyModel[]): Promise<any> {
+  async saveCompra(description: string, itens: NewBuyModel[]): Promise<any> {
     return new Promise<any>(async (resolve) => {
       const db = await this.sql.getDb();
+      const compra = await db.executeSql(INSERT_COMPRA, [description, 0]);
       for (const item of itens) {
-        db.executeSql(INSERT_COMPRA, [item.produto, item.valor, false]);
+        await db.executeSql(INSERT_ITENS_COMPRA, [
+          item.produto,
+          item.valor,
+          false,
+          compra.insertId,
+        ]);
       }
       resolve(true);
     });

@@ -16,6 +16,7 @@ export class NewBuyPage implements OnInit {
   public model: NewBuyModel;
   public listProdutos: NewBuyModel[] = [];
   public indexEditing: number;
+  public descriptionBuy = '';
   constructor(
     private fb: FormBuilder,
     public alertService: AlertService,
@@ -68,12 +69,17 @@ export class NewBuyPage implements OnInit {
   }
 
   async onSalvar(): Promise<void> {
+    if (!this.descriptionBuy) {
+      const msg = `Descrição da Compra não informado.`;
+      this.alertService.presentToast(msg, 1500, 'danger');
+      return;
+    }
     if (!this.listProdutos.length) {
       const msg = `Nenhum produto informado a lista não pode ser salva!`;
       this.alertService.presentToast(msg, 1500, 'danger');
       return;
     }
-    await this.http.saveCompra(this.listProdutos);
-    this.router.navigate(['/tab2']);
+    await this.http.saveCompra(this.descriptionBuy, this.listProdutos);
+    this.router.navigate(['/tabs/tab2']);
   }
 }
