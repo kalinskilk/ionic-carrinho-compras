@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from '../services/alert.service';
-import { SqlLiteService } from '../services/sql/sql-lite.service';
+import { AlertService } from '../../services/alert.service';
+
 import { NewBuyModel } from './new-buy-model';
 import { NewBuyService } from './new-buy.service';
 
@@ -23,11 +23,23 @@ export class NewBuyPage implements OnInit {
     private http: NewBuyService,
     private router: Router
   ) {
-    this.model = new NewBuyModel();
-    this.formGroup = this.fb.group(this.model);
+    this.initForm();
   }
 
   ngOnInit() {
+    this.validators();
+  }
+
+  ionViewWillEnter(): void {
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.listProdutos = [];
+    this.model = new NewBuyModel();
+    this.formGroup = this.fb.group(this.model);
+    this.descriptionBuy = '';
+    this.indexEditing = null;
     this.validators();
   }
 
@@ -70,12 +82,12 @@ export class NewBuyPage implements OnInit {
 
   async onSalvar(): Promise<void> {
     if (!this.descriptionBuy) {
-      const msg = `Descrição da Compra não informado.`;
+      const msg = `Descrição da Compra não informada.`;
       this.alertService.presentToast(msg, 1500, 'danger');
       return;
     }
     if (!this.listProdutos.length) {
-      const msg = `Nenhum produto informado a lista não pode ser salva!`;
+      const msg = `Nenhum produto informado, a lista não pode ser salva!`;
       this.alertService.presentToast(msg, 1500, 'danger');
       return;
     }

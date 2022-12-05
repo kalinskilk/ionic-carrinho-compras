@@ -25,7 +25,23 @@ const routes: Routes = [
       {
         path: 'new-buy',
         loadChildren: () =>
-          import('../new-buy/new-buy.module').then((m) => m.NewBuyPageModule),
+          import('../pages/new-buy/new-buy.module').then(
+            (m) => m.NewBuyPageModule
+          ),
+      },
+      {
+        path: 'list-buys',
+        loadChildren: () =>
+          import('../pages/list-buys/list-buys.module').then(
+            (m) => m.ListBuysPageModule
+          ),
+      },
+      {
+        path: 'check-items-buy/:id',
+        loadChildren: () =>
+          import('../pages/check-items-buy/check-items-buy.module').then(
+            (m) => m.CheckItemsBuyPageModule
+          ),
       },
       {
         path: '',

@@ -4,7 +4,7 @@
       <ion-item
         button
         *ngFor="let obj of list"
-        [routerLink]="['/details', obj.path]"
+        routerLink="/tabs/{{ obj.path }}"
       >
         <ion-avatar slot="start">
           <img [src]="obj.imgUrl" />

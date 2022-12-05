@@ -1,7 +1,8 @@
 {
   "name": "ioni-carrinho-compras",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

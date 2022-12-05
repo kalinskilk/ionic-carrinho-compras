@@ -1,0 +1,12 @@
+<ion-list>
+  <ion-item *ngFor="let obj of list">
+    <ion-label>{{ obj.descricao }}</ion-label>
+
+    <ion-button color="danger" (click)="onDelete(obj.id)">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+    <ion-button color="warning" (click)="onSelectCompra(obj.id)">
+      <ion-icon name="pencil"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>

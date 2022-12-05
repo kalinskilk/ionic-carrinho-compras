@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>list-buys</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-list
+    [list]="list"
+    (sendIdCompra)="getIdCompra($event)"
+    (deleteCompra)="onDeleteCompra($event)"
+  ></app-list>
+</ion-content>

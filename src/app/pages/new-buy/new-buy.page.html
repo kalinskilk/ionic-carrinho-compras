@@ -7,8 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item class="pd-3">
+<ion-content padding>
+  <ion-item>
     <ion-label position="stacked">Descrição</ion-label>
     <ion-input
       placeholder="Ex: Compra semanal"
@@ -17,21 +17,25 @@
   </ion-item>
 
   <form [formGroup]="formGroup" (ngSubmit)="addProduto()">
-    <ion-item class="pd-3">
+    <ion-item>
       <ion-label position="stacked">Produto</ion-label>
-      <ion-input formControlName="produto"></ion-input>
+      <ion-input
+        formControlName="produto"
+        (keydown.enter)="addProduto()"
+      ></ion-input>
     </ion-item>
-    <ion-item class="pd-3">
+    <ion-item>
       <ion-label position="stacked">Valor</ion-label>
       <ion-input type="number" formControlName="valor"></ion-input>
     </ion-item>
-    <div class="pd-3">
+
+    <div class="btn-add">
       <ion-button color="success" type="submit" fill="outline">
         <ion-icon name="add-outline"></ion-icon>
       </ion-button>
     </div>
   </form>
-  <ion-item class="item-qtde pd-3">
+  <ion-item class="item-qtde">
     <ion-label>Quantidade de produtos:</ion-label>
     <ion-badge slot="end">{{listProdutos.length}}</ion-badge>
   </ion-item>
@@ -42,7 +46,7 @@
     (outDel)="onDelete($event)"
   ></app-list>
 
-  <div class="pd-3">
+  <div>
     <ion-button
       color="primary"
       expand="block"

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Marque os itens da sua lista</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-reorder-group [disabled]="false">
+      <ion-item *ngFor="let obj of list">
+        <ion-checkbox
+          slot="start"
+          [(ngModel)]="obj.comprado"
+          (ionChange)="updateIten(obj)"
+        ></ion-checkbox>
+        <ion-label [ngClass]="{del:obj.comprado===true}">
+          <del *ngIf="obj.comprado === true">{{obj.produto}}</del>
+          <span *ngIf="obj.comprado !== true">{{obj.produto}}</span>
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+  </ion-list>
+</ion-content>
