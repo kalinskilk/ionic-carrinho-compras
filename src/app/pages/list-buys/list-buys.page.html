@@ -5,6 +5,18 @@
 </ion-header>
 
 <ion-content>
+  <ion-segment
+    value="NAO_FINALIZADA"
+    mode="ios"
+    (ionChange)="changeSegment($event)"
+  >
+    <ion-segment-button value="NAO_FINALIZADA">
+      <ion-label>Á Fazer</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="FINALIZADA">
+      <ion-label>Feitas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
   <app-list
     [list]="list"
     (sendIdCompra)="getIdCompra($event)"

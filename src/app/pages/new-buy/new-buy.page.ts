@@ -65,11 +65,12 @@ export class NewBuyPage implements OnInit {
   }
 
   async onDelete(index: number): Promise<void> {
-    const del = await this.alertService.presentAlertConfirm(
-      'Atenção',
-      'Deseja deletar o produto?'
-    );
-    if (del) {
+    const params = {
+      header: 'Deseja deletar este item?',
+      subHeader: ' ',
+    };
+    const isConfirm = await this.alertService.presentActionSheet(params);
+    if (isConfirm) {
       this.listProdutos.splice(index, 1);
       this.formGroup.reset();
       await this.alertService.presentToast('Excluido com sucesso!');

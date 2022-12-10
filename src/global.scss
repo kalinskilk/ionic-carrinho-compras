@@ -40,3 +40,20 @@
 .pd-5 {
   padding: 5% !important;
 }
+
+ion-content {
+  --padding-end: 5%;
+  --padding-start: 5%;
+  --padding-top: 3%;
+}
+
+.custom-action-sheet {
+  font-weight: bold !important;
+  color: #0000 !important;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}

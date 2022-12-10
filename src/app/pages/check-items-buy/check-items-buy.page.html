@@ -1,24 +1,34 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Marque os itens da sua lista</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/list-buys"></ion-back-button>
+      <ion-title>Sua lista</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <ion-reorder-group [disabled]="false">
+    <ion-reorder-group
+      [disabled]="false"
+      (ionItemReorder)="handleReorder($any($event))"
+    >
       <ion-item *ngFor="let obj of list">
         <ion-checkbox
           slot="start"
           [(ngModel)]="obj.comprado"
           (ionChange)="updateIten(obj)"
+          mode="ios"
         ></ion-checkbox>
-        <ion-label [ngClass]="{del:obj.comprado===true}">
-          <del *ngIf="obj.comprado === true">{{obj.produto}}</del>
-          <span *ngIf="obj.comprado !== true">{{obj.produto}}</span>
-        </ion-label>
+        <span [ngClass]="{del:obj.comprado === true}">{{obj.produto}}</span>
         <ion-reorder slot="end"></ion-reorder>
       </ion-item>
     </ion-reorder-group>
   </ion-list>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="finalizarCompra()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

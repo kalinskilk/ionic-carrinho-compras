@@ -7,8 +7,11 @@ import { Compras } from 'src/app/services/sql/tables-consts';
 export class ListBuysService implements BaseCrud {
   constructor(private db: SqlLiteService) {}
 
-  async all(): Promise<Compras[]> {
-    return this.db.query('SELECT descricao,id FROM COMPRAS', []);
+  async all(finalizada: boolean): Promise<Compras[]> {
+    return this.db.query(
+      'SELECT descricao,id FROM COMPRAS where finalizada = ?',
+      [finalizada ? 1 : 0]
+    );
   }
 
   async delete(id: number): Promise<any> {

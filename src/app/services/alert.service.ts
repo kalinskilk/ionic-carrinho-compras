@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  AlertController,
+  ToastController,
+} from '@ionic/angular';
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
   constructor(
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private actionSheetCtrl: ActionSheetController
   ) {}
 
   async presentAlertConfirm(
@@ -48,5 +54,51 @@ export class AlertService {
       color,
     });
     toast.present();
+  }
+
+  async presentActionSheet(params: {
+    header: string;
+    subHeader?: string;
+    useButtonNo?: boolean;
+  }): Promise<boolean> {
+    const buttons: ActionSheetButton[] = [
+      {
+        text: 'Sim',
+        role: 'destructive',
+        data: {
+          action: 'delete',
+        },
+      },
+
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        data: {
+          action: 'cancel',
+        },
+      },
+    ];
+
+    if (params.useButtonNo) {
+      buttons.push({
+        text: 'Não',
+        data: {
+          action: 'share',
+        },
+      });
+    }
+
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: params.header,
+      mode: 'ios',
+      subHeader: params.subHeader,
+      buttons,
+      cssClass: 'custom-action-sheet',
+    });
+
+    await actionSheet.present();
+
+    const result = await actionSheet.onDidDismiss();
+    return result.data.action === 'delete' ? true : false;
   }
 }

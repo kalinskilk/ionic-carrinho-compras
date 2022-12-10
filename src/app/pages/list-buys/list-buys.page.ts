@@ -12,6 +12,7 @@ import { ListBuysService } from './list-buys.service';
 })
 export class ListBuysPage implements BaseList {
   list: Compras[] = [];
+  status: 'FINALIZADA' | 'NAO_FINALIZADA' = 'NAO_FINALIZADA';
   constructor(
     private http: ListBuysService,
     private router: Router,
@@ -19,11 +20,11 @@ export class ListBuysPage implements BaseList {
   ) {}
 
   ionViewWillEnter(): void {
-    this.all();
+    this.all(this.status === 'FINALIZADA');
   }
 
-  async all(): Promise<void> {
-    this.list = await this.http.all();
+  async all(finalizada = false): Promise<void> {
+    this.list = await this.http.all(finalizada);
   }
 
   getIdCompra(id: number): void {
@@ -31,15 +32,23 @@ export class ListBuysPage implements BaseList {
   }
 
   async onDeleteCompra(id: number): Promise<void> {
-    console.log('delete', id);
-    const del = await this.alertService.presentAlertConfirm(
-      'Atenção',
-      'Deseja deletar o produto?'
-    );
-    if (del) {
-      const data = await this.http.delete(id);
+    const params = {
+      header: 'Deseja deletar esta compra?',
+      subHeader: ' ',
+    };
+    const isConfirm = await this.alertService.presentActionSheet(params);
+    if (isConfirm) {
+      await this.http.delete(id);
       this.list = this.list.filter((el) => el.id !== id);
       await this.alertService.presentToast('Excluido com sucesso!');
     }
+  }
+
+  changeSegment(event: {
+    detail: { value: 'FINALIZADA' | 'NAO_FINALIZADA' };
+  }): void {
+    const status = event.detail.value === 'FINALIZADA' ? true : false;
+    this.status = event.detail.value;
+    this.all(status);
   }
 }

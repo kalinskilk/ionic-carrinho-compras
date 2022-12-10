@@ -1,11 +1,11 @@
 {
-  "name": "ioni-carrinho-compras",
-  "version": "0.0.1",
+  "name": "ionic-carrinho-compras",
+  "version": "0.0.2",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ionic serve",
     "build:android": "ionic capacitor build android",
     "test": "ng test",
     "lint": "ng lint",
