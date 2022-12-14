@@ -1,25 +1,21 @@
-<ion-card>
-  <ion-card-content>
-    <ion-list>
-      <ion-item
-        button
-        *ngFor="let option of listOptions"
-        (click)="navigate(option.path)"
-      >
-        <ion-avatar>
-          <ion-img [src]="option.imgUrl"></ion-img>
-        </ion-avatar>
-        <ion-label>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="12">{{ option.title }}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2">{{ option.description }}</ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-card-content>
-</ion-card>
+<ion-list>
+  <ion-item
+    button
+    *ngFor="let option of listOptions"
+    (click)="navigate(option.path)"
+  >
+    <ion-avatar>
+      <ion-img [src]="option.imgUrl"></ion-img>
+    </ion-avatar>
+    <ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">{{ option.title }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2">{{ option.description }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-label>
+  </ion-item>
+</ion-list>

@@ -41,10 +41,18 @@
   padding: 5% !important;
 }
 
+/* MARGINS */
+.mb-1 {
+  margin-bottom: 1%;
+}
+.mb-2 {
+  margin-bottom: 2%;
+}
+
 ion-content {
-  --padding-end: 5%;
-  --padding-start: 5%;
-  --padding-top: 3%;
+  --padding-end: 1%;
+  --padding-start: 1%;
+  --padding-top: 5px;
 }
 
 .custom-action-sheet {
@@ -56,4 +64,9 @@ ion-content {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
 }

@@ -1,21 +1,23 @@
 export const browserDBInstance = (db) => ({
-  executeSql: (sql, params) =>
-    new Promise(async (resolve, reject) => {
-      try {
-        /* TODO QUANDO DA ERRO NAO DA REJECCT */
-        db.transaction((tx) => {
-          tx.executeSql(sql, params, (tx, rs) => {
-            // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-            rs.rows.item = function (index) {
-              return rs.rows[index];
+  executeSql: (sql: string, params: any[]) =>
+    new Promise(async (resolve) => {
+      db.transaction((transaction) => {
+        transaction.executeSql(
+          sql,
+          params,
+          (tr, result) => {
+            // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, space-before-function-paren
+            result.rows.item = function (index: number) {
+              return result.rows[index];
             };
-            resolve(rs);
-          });
-        });
-      } catch (err) {
-        console.log(err);
-        reject(err);
-      }
+            resolve(result);
+          },
+          (tr, err: { code: number; message: string }) => {
+            console.log(err);
+            throw new Error(err.code + ' ' + err.message);
+          }
+        );
+      });
     }),
   sqlBatch: (arr) =>
     new Promise((r, rr) => {

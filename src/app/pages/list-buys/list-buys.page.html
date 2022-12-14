@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>list-buys</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="{{ mode === 'default' ? 'tabs/tab1' : 'tabs/tab2'}}"
+      ></ion-back-button>
+      <ion-title>Suas Compras</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -9,6 +14,7 @@
     value="NAO_FINALIZADA"
     mode="ios"
     (ionChange)="changeSegment($event)"
+    *ngIf="mode === 'default'"
   >
     <ion-segment-button value="NAO_FINALIZADA">
       <ion-label>Á Fazer</ion-label>

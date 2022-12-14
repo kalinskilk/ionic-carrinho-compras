@@ -23,14 +23,14 @@ const routes: Routes = [
           import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
       },
       {
-        path: 'new-buy',
+        path: 'new-buy/:id/:descBuy',
         loadChildren: () =>
           import('../pages/new-buy/new-buy.module').then(
             (m) => m.NewBuyPageModule
           ),
       },
       {
-        path: 'list-buys',
+        path: 'list-buys/:mode',
         loadChildren: () =>
           import('../pages/list-buys/list-buys.module').then(
             (m) => m.ListBuysPageModule

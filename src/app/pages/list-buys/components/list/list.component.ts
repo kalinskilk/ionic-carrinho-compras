@@ -16,11 +16,12 @@ import { Compras } from 'src/app/services/sql/tables-consts';
 })
 export class ListComponent {
   @Input() list: Compras[] = [];
-  @Output() sendIdCompra: EventEmitter<number> = new EventEmitter<number>();
+  @Output() sendIdCompra: EventEmitter<{ id: number; descBuy: string }> =
+    new EventEmitter<{ id: number; descBuy: string }>();
   @Output() deleteCompra: EventEmitter<number> = new EventEmitter<number>();
 
-  onSelectCompra(id: number): void {
-    this.sendIdCompra.emit(id);
+  onSelectCompra(id: number, descBuy: string): void {
+    this.sendIdCompra.emit({ id, descBuy });
   }
 
   onDelete(id: number): void {

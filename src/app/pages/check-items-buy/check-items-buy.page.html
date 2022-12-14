@@ -1,30 +1,48 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/list-buys"></ion-back-button>
+      <ion-back-button defaultHref="tabs/list-buys/default"></ion-back-button>
       <ion-title>Sua lista</ion-title>
     </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      padding
+      [(ngModel)]="search"
+      placeholder="Procurar..."
+      [debounce]="500"
+      (ionChange)="onSearch($event)"
+    ></ion-searchbar>
+    <ion-label class="text-center mb-2"
+      >Comprados:<ion-badge slot="start" color="success">
+        {{countBuyed()}}
+      </ion-badge>
+      . Á Comprar:
+      <ion-badge slot="start" color="danger">{{countNotBuyed()}}</ion-badge>
+    </ion-label>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-reorder-group
-      [disabled]="false"
-      (ionItemReorder)="handleReorder($any($event))"
-    >
-      <ion-item *ngFor="let obj of list">
-        <ion-checkbox
-          slot="start"
-          [(ngModel)]="obj.comprado"
-          (ionChange)="updateIten(obj)"
-          mode="ios"
-        ></ion-checkbox>
-        <span [ngClass]="{del:obj.comprado === true}">{{obj.produto}}</span>
-        <ion-reorder slot="end"></ion-reorder>
-      </ion-item>
-    </ion-reorder-group>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+      <ion-reorder-group
+        [disabled]="false"
+        (ionItemReorder)="handleReorder($any($event))"
+      >
+        <ion-item *ngFor="let obj of list">
+          <ion-checkbox
+            slot="start"
+            [(ngModel)]="obj.comprado"
+            (ionChange)="updateIten(obj)"
+            mode="ios"
+          ></ion-checkbox>
+          <span [ngClass]="{del:obj.comprado === true}">{{obj.produto}}</span>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+      </ion-reorder-group>
+    </ion-list>
+  </ion-card>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="finalizarCompra()">

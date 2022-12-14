@@ -13,8 +13,9 @@ import { CheckItemsBuyService } from './check-items-buy.service';
 })
 export class CheckItemsBuyPage implements BaseList {
   public list: ItensCompras[] = [];
-
+  public search = '';
   private id: number;
+
   constructor(
     private route: ActivatedRoute,
     private http: CheckItemsBuyService,
@@ -25,22 +26,24 @@ export class CheckItemsBuyPage implements BaseList {
   }
 
   ionViewWillEnter(): void {
-    this.all();
-    console.log('ionViewWillEnter');
+    this.all(this.search);
   }
 
   ionViewDidEnter(): void {
     console.log('ionViewDidEnter');
   }
 
-  async all(): Promise<void> {
+  async all(search: string): Promise<void> {
     const data = await this.http.all(this.id);
-    this.list = data.map((el: any) => {
-      el.comprado = el.comprado === 'false' ? false : true;
-      return el;
-    });
-
-    console.log(this.list);
+    this.list = data
+      .map((el: any) => {
+        el.comprado = el.comprado === 'false' ? false : true;
+        return el;
+      })
+      .filter(
+        (el: ItensCompras) =>
+          el.produto.toUpperCase().indexOf(search.toUpperCase()) !== -1
+      );
   }
 
   async updateIten(obj: ItensCompras): Promise<void> {
@@ -64,7 +67,19 @@ export class CheckItemsBuyPage implements BaseList {
     }
     if (isConfirmed) {
       await this.http.finalizarCompra(this.id);
-      this.router.navigate(['/tabs/list-buys']);
+      this.router.navigate(['/tabs/list-buys/default']);
     }
+  }
+
+  async onSearch(event: { detail: { value: string } }): Promise<void> {
+    await this.all(event.detail.value);
+  }
+
+  countBuyed(): number {
+    return this.list.filter((el) => el.comprado).length;
+  }
+
+  countNotBuyed(): number {
+    return this.list.filter((el) => !el.comprado).length;
   }
 }

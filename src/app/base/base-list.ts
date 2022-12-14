@@ -1,4 +1,4 @@
 export interface BaseList {
-  all: () => Promise<void>;
+  all: (...params: any) => Promise<void>;
   ionViewWillEnter: () => void;
 }

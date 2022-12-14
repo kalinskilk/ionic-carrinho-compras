@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 
 import { NewBuyModel } from './new-buy-model';
@@ -17,11 +17,13 @@ export class NewBuyPage implements OnInit {
   public listProdutos: NewBuyModel[] = [];
   public indexEditing: number;
   public descriptionBuy = '';
+  public idCompra: number;
   constructor(
     private fb: FormBuilder,
     public alertService: AlertService,
     private http: NewBuyService,
-    private router: Router
+    private router: Router,
+    private activedRoute: ActivatedRoute
   ) {
     this.initForm();
   }
@@ -31,6 +33,12 @@ export class NewBuyPage implements OnInit {
   }
 
   ionViewWillEnter(): void {
+    this.idCompra = Number(this.activedRoute.snapshot.params.id);
+    const descBuy = this.activedRoute.snapshot.params.descBuy;
+    this.descriptionBuy = descBuy.trim() ? descBuy : '';
+    if (this.idCompra) {
+      this.getList();
+    }
     this.initForm();
   }
 
@@ -38,9 +46,12 @@ export class NewBuyPage implements OnInit {
     this.listProdutos = [];
     this.model = new NewBuyModel();
     this.formGroup = this.fb.group(this.model);
-    this.descriptionBuy = '';
     this.indexEditing = null;
     this.validators();
+  }
+
+  async getList(): Promise<void> {
+    this.listProdutos = await this.http.all(this.idCompra);
   }
 
   addProduto(): void {
@@ -62,6 +73,7 @@ export class NewBuyPage implements OnInit {
     this.indexEditing = index;
     this.formGroup.controls.produto.setValue(produto.produto);
     this.formGroup.controls.valor.setValue(produto.valor);
+    this.formGroup.controls.id.setValue(produto.id);
   }
 
   async onDelete(index: number): Promise<void> {
@@ -71,6 +83,10 @@ export class NewBuyPage implements OnInit {
     };
     const isConfirm = await this.alertService.presentActionSheet(params);
     if (isConfirm) {
+      const hasId = this.listProdutos[index].id;
+      if (hasId) {
+        await this.http.deleteItenCompra(hasId);
+      }
       this.listProdutos.splice(index, 1);
       this.formGroup.reset();
       await this.alertService.presentToast('Excluido com sucesso!');
@@ -92,7 +108,11 @@ export class NewBuyPage implements OnInit {
       this.alertService.presentToast(msg, 1500, 'danger');
       return;
     }
-    await this.http.saveCompra(this.descriptionBuy, this.listProdutos);
+    await this.http.saveCompra(
+      this.descriptionBuy,
+      this.listProdutos,
+      this.idCompra
+    );
     this.router.navigate(['/tabs/tab2']);
   }
 }
