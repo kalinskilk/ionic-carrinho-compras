@@ -1,16 +1,35 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { Chart, ChartType, registerables } from 'chart.js';
+
 Chart.register(...registerables);
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
   @ViewChild('barChart') barChart: any;
-
+  @Input() type: ChartType = 'bar';
+  @Input() labels: string[] = [];
+  @Input() data: number[] = [];
+  @Input() backgroundColor = 'rgb(255,0,0)';
+  @Input() title = '';
   bars: any;
   colorArray: any;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    if (changes.labels.currentValue.length) {
+      this.updateChart();
+    }
+  }
 
   ionViewDidEnter() {
     window.setTimeout(() => {
@@ -25,25 +44,43 @@ export class ChartComponent implements OnInit {
   }
 
   createBarChart() {
-    this.bars = new Chart(this.barChart.nativeElement, {
-      type: 'line',
+    const config = this.getChart();
+    this.bars = new Chart(this.barChart.nativeElement, config);
+  }
+
+  getChart(): any {
+    if (this.type === 'doughnut') {
+      return this.chartDoughnut();
+    } else {
+      return this.createChartOthers();
+    }
+  }
+
+  updateChart(): void {
+    this.bars.data.labels = this.labels;
+    this.bars.data.datasets[0].data = this.data;
+    this.bars.update();
+  }
+
+  createChartOthers(): any {
+    const datasets = [
+      {
+        data: this.data,
+        backgroundColor: this.backgroundColor,
+        borderColor: 'rgb(255,0,0)',
+        borderWidth: 1,
+        label: 'SSSSSSSSSS',
+      },
+    ];
+
+    return {
+      type: this.type,
       data: {
-        labels: ['01/12', '02/12', '03/12', '04/12', '12/12', '13/12'],
-        datasets: [
-          {
-            data: [159.99, 300, 200, 125.87, 58, 65],
-            backgroundColor: 'rgb(131, 10, 209)',
-            borderColor: 'rgb(131, 10, 209)',
-            borderWidth: 0,
-          },
-        ],
+        labels: this.labels,
+        datasets,
       },
       options: {
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
+        plugins: plugins(this.title),
         scales: {
           y: {
             type: 'linear',
@@ -64,6 +101,41 @@ export class ChartComponent implements OnInit {
           },
         },
       },
-    });
+    };
+  }
+
+  chartDoughnut(): any {
+    const data = {
+      labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+      datasets: [
+        {
+          label: 'SSSSSSSSSS',
+          data: this.data,
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+          ],
+        },
+      ],
+    };
+    return {
+      type: 'doughnut',
+      data,
+      options: {
+        responsive: true,
+        plugins: plugins(this.title),
+      },
+    };
   }
 }
+
+export const plugins = (title: string, useLegend = false) => ({
+  legend: {
+    position: 'top',
+  },
+  title: {
+    display: true,
+    text: title,
+  },
+});

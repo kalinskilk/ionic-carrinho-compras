@@ -3,7 +3,8 @@ const TABLE_COMPRAS = `CREATE TABLE IF NOT EXISTS COMPRAS(
                         id integer primary key AUTOINCREMENT NOT NULL,
                         descricao VARCHAR(255),
                         valor MONEY,
-                        finalizada bit)`;
+                        finalizada bit,
+                        dataFinalizacao text);`;
 // eslint-disable-next-line max-len
 const TABLE_ITENS = `CREATE TABLE IF NOT EXISTS ITENS_COMPRAS(
                     id integer primary key AUTOINCREMENT NOT NULL,
@@ -12,13 +13,15 @@ const TABLE_ITENS = `CREATE TABLE IF NOT EXISTS ITENS_COMPRAS(
                     comprado BIT,
                     id_compra integer,
                     incluido_inicialmente BIT,
-                    FOREIGN KEY(id_compra) REFERENCES COMPRAS(id))`;
+                    FOREIGN KEY(id_compra) REFERENCES COMPRAS(id));`;
+
 export const TABLES = [TABLE_COMPRAS, TABLE_ITENS];
 
 export class Compras {
   id: number;
   descricao: string;
   valor: number;
+  dataFinalizacao: string;
 }
 
 export class ItensCompras {

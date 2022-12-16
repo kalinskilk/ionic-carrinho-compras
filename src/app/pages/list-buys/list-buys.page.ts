@@ -23,7 +23,6 @@ export class ListBuysPage implements BaseList {
     private location: Location
   ) {
     this.mode = this.activedRoute.snapshot.params.mode;
-    console.log(this.mode);
   }
 
   ionViewWillEnter(): void {

@@ -10,6 +10,27 @@
       <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-chart></app-chart>
-  <app-apresentation-cards></app-apresentation-cards>
+  <div class="mt-2">
+    <app-chart
+      type="bar"
+      [labels]="labelsSpending"
+      [data]="reportDataSpending"
+      title="Seu gastos com mercado esta semana"
+    ></app-chart>
+  </div>
+
+  <div class="mt-2">
+    <app-chart
+      type="doughnut"
+      [labels]="labelsItensBuyeds"
+      [data]="reportDataItensBuyeds"
+      title="Seus itens por compras"
+    ></app-chart>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="newBuy()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

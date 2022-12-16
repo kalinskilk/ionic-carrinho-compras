@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { ApresentationCardsComponent } from './components/apresentation-cards/apresentation-cards.component';
 import ChartModule from '../components/chart/chart.module';
 
 @NgModule({
@@ -16,6 +15,6 @@ import ChartModule from '../components/chart/chart.module';
     Tab1PageRoutingModule,
     ChartModule,
   ],
-  declarations: [Tab1Page, ApresentationCardsComponent],
+  declarations: [Tab1Page],
 })
 export class Tab1PageModule {}

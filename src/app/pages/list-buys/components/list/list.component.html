@@ -1,6 +1,9 @@
 <ion-list>
   <ion-item *ngFor="let obj of list">
-    <ion-label>{{ obj.descricao }}</ion-label>
+    <ion-label
+      >{{ obj.descricao }}
+      {{ obj.valor ? " - " + (obj.valor | currency : "BRL") : "" }}</ion-label
+    >
 
     <ion-button color="danger" (click)="onDelete(obj.id)">
       <ion-icon name="trash-outline"></ion-icon>

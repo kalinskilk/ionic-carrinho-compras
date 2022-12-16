@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ItemReorderEventDetail } from '@ionic/angular';
+import { ItemReorderEventDetail, ModalController } from '@ionic/angular';
 import { BaseList } from 'src/app/base/base-list';
 import { AlertService } from 'src/app/services/alert.service';
+import { DateUtilsService } from 'src/app/services/date-utils.service';
 import { ItensCompras } from 'src/app/services/sql/tables-consts';
 import { CheckItemsBuyService } from './check-items-buy.service';
+import { ModalComponent } from './components/modal/modal.component';
 
 @Component({
   selector: 'app-check-items-buy',
@@ -20,7 +22,9 @@ export class CheckItemsBuyPage implements BaseList {
     private route: ActivatedRoute,
     private http: CheckItemsBuyService,
     private router: Router,
-    private alert: AlertService
+    private alert: AlertService,
+    private modalCtrl: ModalController,
+    private dateUtilsService: DateUtilsService
   ) {
     this.id = Number(this.route.snapshot.params.id);
   }
@@ -65,8 +69,20 @@ export class CheckItemsBuyPage implements BaseList {
       };
       isConfirmed = await this.alert.presentActionSheet(params);
     }
-    if (isConfirmed) {
-      await this.http.finalizarCompra(this.id);
+    if (!isConfirmed) {
+      return;
+    }
+
+    const modal = await this.modalCtrl.create({
+      component: ModalComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      const date = this.dateUtilsService.formatDate(new Date());
+      await this.http.finalizarCompra(this.id, data, date);
       this.router.navigate(['/tabs/list-buys/default']);
     }
   }

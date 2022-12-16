@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Finalização</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()">Confirmar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-label position="stacked">Total:</ion-label>
+    <ion-input [(ngModel)]="total" type="number" mode="ios"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Como foi sua compra?</ion-label>
+    <ion-input [(ngModel)]="name" type="tel" mode="ios"></ion-input>
+  </ion-item>
+</ion-content>

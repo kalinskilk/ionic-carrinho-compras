@@ -8,6 +8,7 @@ import { CheckItemsBuyPageRoutingModule } from './check-items-buy-routing.module
 
 import { CheckItemsBuyPage } from './check-items-buy.page';
 import { CheckItemsBuyService } from './check-items-buy.service';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { CheckItemsBuyService } from './check-items-buy.service';
     IonicModule,
     CheckItemsBuyPageRoutingModule,
   ],
-  declarations: [CheckItemsBuyPage],
+  declarations: [CheckItemsBuyPage, ModalComponent],
   providers: [CheckItemsBuyService],
 })
 export class CheckItemsBuyPageModule {}

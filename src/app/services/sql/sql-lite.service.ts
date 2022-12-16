@@ -49,6 +49,17 @@ export class SqlLiteService {
     });
   }
 
+  async insert(sql: string, params: any[]): Promise<number> {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const data = await this.dataBase.executeSql(sql, params);
+        resolve(data.insertId);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   getDb(): Promise<SQLiteObject> {
     if (!this.platform.is('cordova')) {
       return new Promise<any>((resolve) => {

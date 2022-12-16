@@ -5,4 +5,4 @@ export const GET_ITENS_COMPRA =
   'SELECT id,produto,comprado,valor FROM ITENS_COMPRAS WHERE ID_COMPRA = ?';
 
 export const FINALIZAR_COMPRA =
-  'UPDATE COMPRAS SET finalizada = true WHERE id=?';
+  'UPDATE COMPRAS SET finalizada = true,valor=?,dataFinalizacao=? WHERE id=?';

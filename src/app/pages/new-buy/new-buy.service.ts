@@ -23,8 +23,8 @@ export class NewBuyService {
   ): Promise<any> {
     return new Promise<any>(async (resolve) => {
       if (!idCompra) {
-        const compra = await this.db.query(INSERT_COMPRA, [description, 0]);
-        idCompra = compra.insertId;
+        const insertId = await this.db.insert(INSERT_COMPRA, [description, 0]);
+        idCompra = insertId;
       } else {
         await this.db.query(UPDATE_COMPRA, [description, idCompra]);
       }

@@ -9,7 +9,7 @@ export class ListBuysService implements BaseCrud {
 
   async all(finalizada: boolean): Promise<Compras[]> {
     return this.db.query(
-      'SELECT descricao,id FROM COMPRAS where finalizada = ?',
+      'SELECT descricao,id,valor FROM COMPRAS where finalizada = ?',
       [finalizada ? 1 : 0]
     );
   }

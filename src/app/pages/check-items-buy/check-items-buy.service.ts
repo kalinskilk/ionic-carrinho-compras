@@ -17,7 +17,11 @@ export class CheckItemsBuyService implements BaseCrud {
     return this.db.query(UPDATE_ITENSCOMPRA, [comprado, id]);
   }
 
-  async finalizarCompra(idCompra: number): Promise<any> {
-    return this.db.query(FINALIZAR_COMPRA, [idCompra]);
+  async finalizarCompra(
+    idCompra: number,
+    valor: number,
+    dataFinalizacao: string
+  ): Promise<any> {
+    return this.db.query(FINALIZAR_COMPRA, [valor, dataFinalizacao, idCompra]);
   }
 }
