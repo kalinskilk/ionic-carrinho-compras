@@ -21,13 +21,13 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - name: Install Ionic
         run: npm install -g @ionic/cli
 
       - name: Install app dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Convert Windows line endings to Linux from the gradlew file
         run: sudo apt update && sudo apt install dos2unix && cd android && dos2unix ./gradlew && cd ..
